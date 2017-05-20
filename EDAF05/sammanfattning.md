@@ -85,3 +85,8 @@ One approach to the problem might be to run the program for some number of steps
 ##### Maximum indipendent set
 A maximum independent set is an independent set of largest possible size for a given graph G. This size is called the independence number of G, and denoted α(G). The problem of finding such a set is called the maximum independent set problem.
 ### How to know what degree a problem is
+The strategy is this:
+1. Try to reduce your problem to a known P problem. if this can't be done move on to step 2.
+2. Try to reduce a known np-complete problem, if this can't be done it is probebly a NP-Hard problem.
+
+By reduceing I mean if you set a P,NP,NP-Complete problem as a lowerbound and you can use your problem to solve the lowerbound problem then your problem is at least as hard as the problem you use as a mesureing stick. so if you can reduce your problem down to a np-complete problem you eather have a np-complete problem or a NP-hard problem. 
