@@ -2,7 +2,7 @@
 ## Memory
 The memory is used to store data and instructions. Computer memory is the storage space in the computer, where data is to be processed and instructions required for processing are stored. The memory is divided into large number of small parts called cells. Each location or cell has a unique address. 
 Inline-style: 
-![https://github.com/Dsek-LTH/Courses/blob/master/EDAF15/mem.jpg]("")
+![](https://github.com/Dsek-LTH/Courses/blob/master/EDAF15/mem.jpg)
 Above is the "memory triangle", it shows the relation between diffrent kinds of memory in the computer. 
 ### Volatile & nonvolatile memory.
 Volatile memory is memory which resets (loses all allocated memory) when the power is turned off. Cache and RAM are examples of volatile memory. 
