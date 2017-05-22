@@ -1,13 +1,13 @@
 # EDAF05
 ## Algorithms
-### Stable Maching problem
+### Stable Matching problem
 Is the problem of finding a stable matching between two equally sized sets of elements given an ordering of preferences for each element. A matching is a mapping from the elements of one set to the elements of the other set. A matching is not stable if:
-*There is an element A of the first matched set which prefers some given element B of the second matched set over the element to which A is already matched, and
+* There is an element A of the first matched set which prefers some given element B of the second matched set over the element to which A is already matched, and
 *B also prefers A over the element to which B is already matched.
 In other words, a matching is stable when there does not exist any match (A, B) by which both A and B would be individually better off than they are with the element to which they are currently matched.
 ### Greedy Algorithms
- Greedy problems can be solved by takeing the best option first and do so until the problem is solved, This solves some problems optimal but far from all. 
- An example of this is the spanning usa lab in the course. During this labb you want to create a minimum spanning tree. This is done by sorting the weights in de graph and choosing the least costly edge while avoiding cycles. This will result in a optimal solution.
+ Greedy problems can be solved by taking the best option first and do so until the problem is solved, This solves some problems optimal but far from all. 
+ An example of this is the spanning USA lab in the course. During this lab you want to create a minimum spanning tree. This is done by sorting the weights in de graph and choosing the least costly edge while avoiding cycles. This will result in a optimal solution.
 ### Graph connectivity
  A graph is connected when there is a path between every pair of vertices. In a connected graph, there are no unreachable vertices. A graph that is not connected is disconnected. A graph G is said to be disconnected if there exist two nodes in G such that no path in G has those nodes as endpoints.
 A graph with just one vertex is connected. An edgeless graph with two or more vertices is disconnected.
@@ -67,17 +67,15 @@ Given a list of cities and the distances between each pair of cities, what is th
 The halting problem is a decision problem about properties of computer programs on a fixed Turing-complete model of computation, i.e., all programs that can be written in some given programming language that is general enough to be equivalent to a Turing machine. The problem is to determine, given a program and an input to the program, whether the program will eventually halt when run with that input. In this abstract framework, there are no resource limitations on the amount of memory or time required for the program's execution; it can take arbitrarily long, and use arbitrarily as much storage space, before halting. The question is simply whether the given program will ever halt on a particular input.
 
 For example, in pseudocode, the program
-
-´´´
+``
     while (true) continue
-´´´
-
+    ``
 does not halt; rather, it goes on forever in an infinite loop. On the other hand, the program
 
-´´´
+``
     print "Hello, world!"
 
-´´´
+``
 does halt.
 
 While deciding whether these programs halt is simple, more complex programs prove problematic.
