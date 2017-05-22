@@ -2,20 +2,23 @@
 ## Memory
 The memory is used to store data and instructions. Computer memory is the storage space in the computer, where data is to be processed and instructions required for processing are stored. The memory is divided into large number of small parts called cells. Each location or cell has a unique address. 
 Inline-style: 
-![mem.jpg]("mem.jpg")
+![https://github.com/Dsek-LTH/Courses/blob/master/EDAF15/mem.jpg]("")
 Above is the "memory triangle", it shows the relation between diffrent kinds of memory in the computer. 
 ### Volatile & nonvolatile memory.
 Volatile memory is memory which resets (loses all allocated memory) when the power is turned off. Cache and RAM are examples of volatile memory. 
 ### Registers
 In computer architecture, a processor register is a quickly accessible location available to a computer's central processing unit (CPU). Registers usually consist of a small amount of fast storage, although some registers have specific hardware functions, and may be read-only or write-only. Registers are typically addressed by mechanisms other than main memory, but may in some cases be assigned a memory address.
+
 ### Cache
 Cache memory is a very high speed semiconductor memory which can speed up the CPU. It acts as a buffer between the CPU and the main memory. It is used to hold those parts of data and program which are most frequently used by the CPU. The parts of data and programs are transferred from the disk to cache memory by the operating system, from where the CPU can access them.
+
 #### Mapping
 Just as bookshelves come in different shapes and sizes, caches can also take on a variety of forms 
 and capacities. But no matter how large or small they are, caches fall into one of three categories: 
 direct mapped, n-way set associative, and fully associative.
 ##### Direct
 A cache block can only go in one index in the cache. It makes a cache block very easy to find, but it‛s not very flexible about where to put the blocks. This memory layout has some drawbacks, it will write over the information in a cache block if the sougth after address isn't in the cache (if cache miss) and this might result in more cache misses. 
+
 ##### Assosiative 
 No index is needed, since a cache block can go anywhere in the cache. Every tag must be compared when finding a block in the cache, but block placement is very flexible. becuase every tag needs to be campared to find the cache block we will need as much comparators as number of tags. Which will result in much transistorspace being #waisted". Also note that it is more likely to get a hit in a fully asslsiative chahe. 
 ##### N-way Set-Assosiative. 
@@ -55,17 +58,29 @@ Memmory in C may be allocated in several ways:
 * realloc - reallocates memory from a given position and size to a new position (If needed) and changes the size of the allocated space. 
 * alloca - allocates memory within the current function's stack frame. Memory allocated using alloca will be removed from the stack when the current function returns. alloca is limited to small allocations. There is no need to free said memory becuase it only exist in the curret stack frame.  
 * free - frees allocated space. 
+
 #### Stack
 The stack is the memory set aside as scratch space for a thread of execution. When a function is called, a block is reserved on the top of the stack for local variables and some bookkeeping data. When that function returns, the block becomes unused and can be used the next time a function is called. The stack is always reserved in a LIFO (last in first out) order; the most recently reserved block is always the next block to be freed. This makes it really simple to keep track of the stack; freeing a block from the stack is nothing more than adjusting one pointer. The stack is placed in the computers RAM memory.
+
 #### Heap
 The heap is memory set aside for dynamic allocation. Unlike the stack, there's no enforced pattern to the allocation and deallocation of blocks from the heap; you can allocate a block at any time and free it at any time. This makes it much more complex to keep track of which parts of the heap are allocated or free at any given time. The heap is stored in the computers RAM memory.
-#### Pointers
-The ide of a pointer is very simple to explain and to get a sens of what it does. It points to a memory space in the computer. I can't strees this enough, it points to a memory space NOT a object like an int or struct. This makes pointers very agile. The pointer is always pointing to a memory space and if you want to use information stored at the memoryspace you need to use the * operator. 
 
-##### * and & operators
+### Temporal and Spatial locality
+For best performance we need to take advantage of how objects are placed in the memory and when they are being accessed in the execution sequence. 
+#### Temporal locality
+Temporal locality is focused on time, instructions close in time has a temporal locality. 
+
+#### Spatial locality
+Objects are close to each other in memory.
+
+### Pointers
+The idea of a pointer is very simple to explain and to get a sens of what it does. It points to a memory space in the computer. I can't stress this enough, it points to a memory space NOT a object like an int or struct. This makes pointers very agile. The pointer is always pointing to a memory space and if you want to use information stored at the memoryspace you need to use the * operator. 
+
+#### * and & operators
 The * operator is called the Value at operator. It returns the value stored at the pointers address. 
 The & operator is called the Address operator. It returns the address of a stored value. 
-###### Example of * and & operators
+
+##### Example of * and & operators
 ```c
 int i = 5;
 int *p = &i;
@@ -74,7 +89,8 @@ printf("%p", &i); //Prints the address of variable i
 printf("%d", *p); // Prints the value stored at the address p
 ```
 Note: in the code above we have changed the value of the variable i aswell. 
-##### Pointer aritmetics
+
+#### Pointer aritmetics
 A very nice feature of pointer movement in C is that the compliler knows how much to move the pointer to the next element.
 ```c
 int *ptr;
@@ -90,6 +106,7 @@ This will move the pointer 2 bytes to the left and not the one byte to the left 
 ### Bitwise Operators 
 #### & operator
 Binary AND Operator copies a bit to the result if it exists in both operands. 
+
 | a |b | output |
 | ------------- |:-------------:| -----:|
 | 0| 0| 0 |
@@ -98,6 +115,7 @@ Binary AND Operator copies a bit to the result if it exists in both operands.
 
 #### ^ operator
 Binary XOR Operator copies the bit if it is set in one operand but not both. 
+
 | a |b | output |
 | ------------- |:-------------:| -----:|
 | 0| 0| 0|
@@ -106,6 +124,7 @@ Binary XOR Operator copies the bit if it is set in one operand but not both.
 
 #### | operator
 Binary OR Operator copies a bit if it exists in either operand.
+
 | a |b | output |
 | ------------- |:-------------:| -----:|
 | 0| 0|  0|
@@ -114,6 +133,7 @@ Binary OR Operator copies a bit if it exists in either operand.
 
 #### ~ operand
 Binary Ones Complement Operator is unary and has the effect of 'flipping' bits.
+
 |  | output |
 | ------------- |-----:|
 | a | 101100|
@@ -126,15 +146,43 @@ Binary Left Shift Operator. The left operands value is moved left by the number 
 | ------------- |-----:|
 | a | 101100|
 | a<<1| 011000|
+
 #### >> operand
 Binary Right Shift Operator. The left operands value is moved right by the number of bits specified by the right operand.
+
 |  | output |
 | ------------- |-----:|
 | a | 101100|
 | a>>1| 010110|
 
+#### Compiler optimization
+The C compiler can change the way the program execute to increase the speed of the program, one way of it doing this is loop optimization.
+Loop optimization is the process of increasing execution speed and reducing the overheads associated with loops. It plays an important role in improving cache performance and making effective use of parallel processing capabilities. Most execution time of a scientific program is spent on loops.
+
+The compiler can optimize a lot but it is not allowed to change the order of elements in a struct. To minimize the struct size, you need to arrange the fields such that the alignment padding is minimized.
+
 ### Tools
 
-#### Valgrind
+#### Valgrind (Memcheck)
+Is a generic framework for creating dynamic analysis tools such as checkers and profilers.
+Memcheck is the default tool for valgrind. The problems Memcheck can detect and warn about include the following:
+* Use of uninitialized memory
+* Reading/writing memory after it has been free'd
+* Reading/writing off the end of malloc'd blocks
+* Memory leaks
+The price of this is lost performance. Programs running under Memcheck usually run from twenty to thirty times slower than running outside Valgrind and use more memory.
 
+#### Cachegrind
+Is a a cache profiler, it will show the cache miss rate among other useful data. Cachegrind is a part of valgrind. 
 
+#### Massif
+Measures the amount of heap memory different parts of a program allocates. Is used valgrind to generate data just like cachegrind. 
+
+#### OProfile 
+Is a system-wide statistical profiling tool for Linux. Oprofile can count the number of times certain events happen such as: clock cycles, executed instructions cache misses. Can be presented at source code level or instruction level. Advantages over gcov/gprof are that it does not need special flags and should be used with the highest level of optimization. A disadvantage is that to change what it should count, the user must have root privileges on the machine.
+
+#### gcov
+Counts exact execution counts for each source line as well as branch frequencies (taken/non-taken). Needs special flags for the compilation and affects compiler optimization.
+
+#### gprof
+Execution times are shown for the different functions and the number of times each function is called and by which function. Needs special flags for the compilation and affects compiler optimization.
