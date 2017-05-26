@@ -3,6 +3,7 @@
 The memory is used to store data and instructions. Computer memory is the storage space in the computer, where data is to be processed and instructions required for processing are stored. The memory is divided into large number of small parts called cells. Each location or cell has a unique address. 
 Inline-style: 
 ![](https://github.com/Dsek-LTH/Courses/blob/master/EDAF15/mem.jpg)
+
 Above is the "memory triangle", it shows the relation between diffrent kinds of memory in the computer. 
 ### Volatile & nonvolatile memory.
 Volatile memory is memory which resets (loses all allocated memory) when the power is turned off. Cache and RAM are examples of volatile memory. 
@@ -16,20 +17,25 @@ Cache memory is a very high speed semiconductor memory which can speed up the CP
 Just as bookshelves come in different shapes and sizes, caches can also take on a variety of forms 
 and capacities. But no matter how large or small they are, caches fall into one of three categories: 
 direct mapped, n-way set associative, and fully associative.
+
 ##### Direct
 A cache block can only go in one index in the cache. It makes a cache block very easy to find, but it‛s not very flexible about where to put the blocks. This memory layout has some drawbacks, it will write over the information in a cache block if the sougth after address isn't in the cache (if cache miss) and this might result in more cache misses. 
 
 ##### Assosiative 
 No index is needed, since a cache block can go anywhere in the cache. Every tag must be compared when finding a block in the cache, but block placement is very flexible. becuase every tag needs to be campared to find the cache block we will need as much comparators as number of tags. Which will result in much transistorspace being #waisted". Also note that it is more likely to get a hit in a fully asslsiative chahe. 
+
 ##### N-way Set-Assosiative. 
 The cache is made up of sets that can fit N-blocks each. The index is now used to find the set, and the tag helps find the block within the set.
-##### Way of thinkning about the different cache mappings. 
+
+##### Way of thinking about the different cache mappings. 
 The direct mapped cache is just a 1-way set associative cache, and a fully associative cache of m blocks is an m-way set associative cache!
+
 ##### Cache miss
 A cache miss is when we try to find a memory block in the cache but we don't find it. This will result in the need of fetching that memory block from the hard drive which will take A LOT of time in compareson and the possibility of cache blocks being overwritten depending on the cache mapping. 
 
 ### RAM
 Random-access memory (RAM) is a form of computer data storage which stores frequently used program instructions to increase the general speed of a system. A random-access memory device allows data items to be read or written in almost the same amount of time irrespective of the physical location of data inside the memory.
+
 ### Primary memory
 Secondary storage (also known as external memory or auxiliary storage), differs from primary storage in that it is not directly accessible by the CPU. The computer usually uses its input/output channels to access secondary storage and transfers the desired data using intermediate area in primary storage. Secondary storage does not lose the data when the device is powered down—it is non-volatile. Per unit, it is typically also two orders of magnitude less expensive than primary storage. Modern computer systems typically have two orders of magnitude more secondary storage than primary storage and data are kept for a longer time there.
 
@@ -43,7 +49,8 @@ The seps vary by the computer architecture but the RISC looks like this:
 * Memory access
 * Register write back
 
-The ideal speedup from a pipeline is equal to the number of stages in the pipeline but due to misspredictions and stalls the speedup is less than the number of stages in the pipeline. 
+The ideal speedup from a pipeline is equal to the number of stages in the pipeline but due to misspredictions, cache misses and stalls the speedup is less than the number of stages in the pipeline. 
+
 ### Branch prediction
 Pipelined processors use speculative computing to be more efficient. This means that they will need to guess the outcome of a branch. This can be done with the help of a Branch History Table, where the results of the last branches are stored. Without this optimization, instructions following the branch cannot be loaded until the outcome has been determined.
 In the case of the branch prediction being wrong the pipeline stalls and it has to restart from the point of the miss prediction.
