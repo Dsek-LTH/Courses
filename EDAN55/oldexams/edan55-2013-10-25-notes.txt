@@ -1,0 +1,127 @@
+Notes for exam in EDAN 25 Oct 2013
+==================================
+
+Questions 1a-1c
+---------------
+
+Almost nobody had problems with these.
+
+Question 1d
+-----------
+
+Let D denote the maximum degree of G. 
+
+OPT >= D: The minimum number of colours needed to edge-colour G is at least D, because a maximum-degree vertex is incident on D edges, each of which needs its own colour.
+
+Algorithm <= 2D: Consider an edge e_i at the time when it is coloured by the algorithm.
+Let v and w denote the endpoints of e_i. 
+There are at most D edges (including e_i) around v. 
+Moreover, there are at most D edges (including e_i) around w.
+Thus, at most 2(D-1)= 2D-1 colours are used among the edges around v and w. 
+In particular, if we have a palette with D colours, at least one colour is available at e_i.
+Thus, the algorithm can colour G with 2D colours.
+
+In summary, Algorithm <= 2D <= 2OPT.
+
+(Note: An algorithm called Vizing's algorithm uses at most D+1 colours.)
+
+Question 1e
+-----------
+
+Given an instance G to 3-edge colouring, run the hypothetical 4/3-eps algorithm on it. 
+Assume G is a yes-instance, so OPT = 3.
+By assumption, the algorithm decides if the graph can be coloured with 
+
+    (4/3-eps) * OPT =  (4/3 - eps) * 3 = 4 - eps
+
+colours. Since the number of colours is an integer and eps is nonzero, this means that G can be 3-coloured.
+
+Conversely, if G cannot be 3-coloured then the hypothetical approximation algorithm (trivially) does not produce a 3-colouring.
+
+In summary, the hypothetical algorithm solves the exact decision problem. 
+(We note that all computation was in polynomial time.)
+
+
+Question 2b
+-----------
+
+Consider all subsets of size k.
+
+Question 2c
+-----------
+
+Consider vertex v.
+By the argument preceing the question we assume that v has degree at most 5.
+Let v_1= v and let v_2,...,v_6 denote v's neighbours.
+We will write a simple branching algorithm as follows.
+There are 6 cases.
+In case i we assume that v_i belongs to the independent set.
+In that case we remove v_i and all its neighbours and recursively search for a size-(k-1) indpendent set.
+(There is no reason to consider case that none of the 6 vertices belongs to an independent set, since we might always add v_1 to such a solution.
+Note that several of v_1's neighbours can belong to an independent set.)
+
+The running time is given by T(k,n) = 6*T(k-1,n-1), which solves to 6^k*poly(n)
+
+Question 2d
+-----------
+
+If k < n/4 then the answer is just "yes," because one of the colour classes in the 4-colour theorem must have size at least n/4.
+
+Otherwise n/4<=k , so n<=4k. 
+We now run the well-known simple branching algorithm mentioned at the top of page 3 (below the yellow box). 
+The resulting running time is
+
+1.3803^n < 1.3808^(4k) = 3.6352^k.
+
+(No need to be so precise if you don't have a calculator handy.)
+
+Question 3b
+-----------
+
+Check all assignments in time 2^n poly(n)
+
+Question 3c
+-----------
+
+Take the first un-"satisfied" clause. 
+There are 3 cases, depending on which of the 3 literals becomes true. 
+Each case sets at least 3 literals (namely, the ones in the clause, even though there might be more "forced" literals once you clean up the rest of the expression in each case.)
+Thus, the running time is given by T(n)= 3*T(n-3) + O(n)
+This is solved by iterative unfolding to 3^(n/3) * poly(n)
+
+Question 4b
+-----------
+
+Nike algorithm ("Just do it.") Pick a vertex, and make your choice. 
+This choice forces lots of neighbouring vertices in your connected component. Keep following those forced choices (just like standard 2-colouring). 
+If everything works without conflict: great, just remove those vertices and attack the rest of the graph (which is "independent" of your choices).
+Otherwise try the other colour.
+
+Question 4c
+-----------
+
+1/3
+
+Question 4d
+-----------
+
+(1/3)^n, each L(v) must be {2,3} and the choices are indendent
+
+Question 4e
+-----------
+
+(1/3)^(n-1). 
+For i = 2,...,n, each L(v_i) must be L(v_{i-1}), and the choices are independent
+
+Question 4f
+-----------
+(2/3)^n. There are 2 choices for L(v) that include f(v). As above, independent yadda-yadda.
+
+Question 4g
+-----------
+
+If the algorithm happened to choose the lists L so that each L(v) includes f(v) then it will recover the valid colouring. This happens with prob found in 4f. Repeat until success: this takes the inverse probability, so
+
+	1.5^n * poly(n)
+
+(For full points, either appeal to success probablity of Bernoulli trails, probably saying "geometric distribution" somewhere, or use indicator random variables, or some overkill as in Kleinberg-Tardos page 711-712 (which actually computes the probability of not succeeding in that many steps)).
