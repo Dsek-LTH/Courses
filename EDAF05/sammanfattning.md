@@ -16,7 +16,8 @@ A graph with just one vertex is connected. An edgeless graph with two or more ve
 It is closely related to the theory of network flow problems.
 
 #### Bitpartite graphs
-A bipartite graph is a graph whos vertices can be devided in two disjoined sets such as every edge connects two vertices, one in each disjoined set.  
+A bipartite graph is a graph whos vertices can be devided in two disjoined sets such as every edge connects two vertices, one in each disjoined set.
+
 ### Devide and Conqure
 Is an algorithm design paradigm based on multi-branched recursion. A divide and conquer algorithm works by recursively breaking down a problem into two or more sub-problems of the same or related type, until these become simple enough to be solved directly. The solutions to the sub-problems are then combined to give a solution to the original problem.
 An example of this is the fibbonacis series, to find the n:th number in the series you have to know all the previous numbers in the series.
@@ -47,12 +48,14 @@ Big-O order of memory means how does the number of bytes needed to execute the a
 ## P, NP, NP-Complete & NP-hard
 ### P != NP
 P != NP is one of the millenium problems. The problem is essensially to prove that some problems can't be computed in polynomial time. It is not proven that p != NP but it is a guess made by most computer scientists. To prove that some poblems can be solved in polynomial time would essensially create mass panic because all computer security is built on NP problems. 
-
+#### Decision problem
+A decision problem is a problem that can be posed as a yes-no question of the input values.
 #### P
-This is functions that is easy to compute and dosen't get harder by size. All of the algorithms in this class is p problems. 
+P is a complexity class that represents the set of all decision problems that can be solved in polynomial time. That is, given an instance of the problem, the answer yes or no can be decided in polynomial time.
+All of the algorithms in this class is p problems. 
 
 #### NP
-NP - nondeterministic polynomial time. 
+NP - nondeterministic polynomial time. NP is a complexity class that represents the set of all decision problems for which the instances where the answer is "yes" have proofs that can be verified in polynomial time.
 This is functions which gets harder with size, like solving sodoku. sodoku with a 9x9 grid may rellatively easey be solved by bruteforce but a 18 by 18 grid will take much more time and wont follow a polynomial time increase. An example of np problems being used in computer security is RSA-encryption. Where finding the keys by knowing the resulting modulu operation.  
 ### NP-Complete
 NP-complete problems are in NP, the set of all decision problems whose solutions can be verified in polynomial time.
@@ -81,7 +84,8 @@ A Hammiltonian cycle/path is a can be solved by the Traveling salesman problem, 
 Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible.
 
 ### NP-hard
-NP-hard is the defining property of a class of problems that are, informally, "at least as hard as the hardest problems in NP". 
+NP-hard is the defining property of a class of problems that are, informally, "at least as hard as the hardest problems in NP".  Note that NP-hard problems do not have to be in NP, and they do not have to be decision problems. 
+A memory rule I have: "Is this problem similar to a NP-Complete problem but adds a constran?", if the answer is yes we have a NP-Hard problem. 
 
 #### (Maximum) indipendent set
 Given a graph G = (v,E), we say a set of nodes belonging to the a set S. we want to find the maximum set of nodes which are independent to one and another. Two nodes are independent if the nodes don't have an edge directly conecting them.
@@ -89,7 +93,9 @@ Given a graph G = (v,E), we say a set of nodes belonging to the a set S. we want
 #### Travelling salesman
 Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city? A problem which can be reduced to the Hammilton path problem. 
 
-#### Halting problem
+Remembering the memory rule given erlyer we can easely se the added constrant; shortest route. (Minimal Hammiltonian cycle).
+
+#### Halting problem (not include in the course, just a fun fact)
 The halting problem is a decision problem about properties of computer programs on a fixed Turing-complete model of computation, i.e., all programs that can be written in some given programming language that is general enough to be equivalent to a Turing machine. The problem is to determine, given a program and an input to the program, whether the program will eventually halt when run with that input. In this abstract framework, there are no resource limitations on the amount of memory or time required for the program's execution; it can take arbitrarily long, and use arbitrarily as much storage space, before halting. The question is simply whether the given program will ever halt on a particular input.
 
 For example, in pseudocode, the program
@@ -98,21 +104,16 @@ For example, in pseudocode, the program
     ``
 does not halt; rather, it goes on forever in an infinite loop. On the other hand, the program
 
-``
-    print "Hello, world!"
-
-``
+``print "Hello, world!" ``
 does halt.
 
 While deciding whether these programs halt is simple, more complex programs prove problematic.
 One approach to the problem might be to run the program for some number of steps and check if it halts. But if the program does not halt, it is unknown whether the program will eventually halt or run forever.
 
-##### Maximum indipendent set
-A maximum independent set is an independent set of largest possible size for a given graph G. This size is called the independence number of G, and denoted α(G). The problem of finding such a set is called the maximum independent set problem.
-
 ### How to know what degree a problem is
 The strategy is this:
 1. Try to reduce your problem to a known P problem. if this can't be done move on to step 2.
-2. Try to reduce a known np-complete problem, if this can't be done it is probebly a NP-Hard problem.
+2. Try to reduce a known NP-Complete problem, if this can't be done it is probebly a NP-Hard problem.
 
-By reduceing I mean if you set a P,NP,NP-Complete problem as a lowerbound and you can use your problem to solve the lowerbound problem then your problem is at least as hard as the problem you use as a mesureing stick. so if you can reduce your problem down to a np-complete problem you eather have a np-complete problem or a NP-hard problem. 
+By reduceing I mean if you set a P,NP,NP-Complete problem as a lowerbound and you can use your problem to solve the lowerbound problem then your problem is at least as hard as the problem you use as a mesureing stick. so if you can reduce your problem down to NP-Complete problem you eather have a NP-Complete problem or a NP-Hard problem. 
+
