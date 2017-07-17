@@ -55,6 +55,12 @@ The ideal speedup from a pipeline is equal to the number of stages in the pipeli
 Pipelined processors use speculative computing to be more efficient. This means that they will need to guess the outcome of a branch. This can be done with the help of a Branch History Table, where the results of the last branches are stored. Without this optimization, instructions following the branch cannot be loaded until the outcome has been determined.
 In the case of the branch prediction being wrong the pipeline stalls and it has to restart from the point of the miss prediction.
 
+## Superscalar processor
+A superscalar processor can execute more than one instruction during a clock cycle by simultaneously dispatching multiple instructions to different execution units on the processor. Each execution unit is not a separate processor (or a core if the processor is a multi-core processor), but an execution resource within a single CPU such as an arithmetic logic unit.
+
+### Branch prediction && Speculativ execution
+Branch prediction is when the computer makes an ediucated guess of the outcome of a branching statment (if-statment) depending on previous resusts and guesses. When the CPU guess on a branch it starts a speculative execution.  Speculativ execution is an execution of some instructions which is not yet confirmed to be needed, an example is when there is a branch prediction and it guess on the outcome TRUE and starts executing the instruction in that if-statment. If the CPU later realize that it guessed wrong it then revert the changes made and the pipeline stalls. 
+
 ## C-programming
 C-programming differs a little from java in a sense. The main difference is that in C we need to allocate and deallocate all memory by our self. In java this is done by the java viritual machine. This makes the code more agile but less effective. 
 

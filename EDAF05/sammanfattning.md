@@ -31,6 +31,7 @@ Dynamic programming algorithms are often used for optimization. A dynamic progra
 ### Network flow
 Network flow problems are very similar to graph problems but has one main difference, all edges has a weight. Network flow is a problem wich consists of a directed graph where each edge has a capacity and each edge receives a flow. The amount of flow on an edge cannot exceed the capacity of the edge. A flow must satisfy the restriction that the amount of flow into a node equals the amount of flow out of it, unless it is a source, which has only outgoing flow, or sink, which has only incoming flow. This algorithm can be used to model traffic flow in citys, sewer systems or network capacity.  
 
+The max-flow min-cut theorem states that in a flow network, the maximum amount of flow passing from the source to the sink is equal to the total weight of the edges in the minimum cut, i.e. the smallest total weight of the edges which if removed would disconnect the source from the sink.
 ### Special cases
 #### Maximum Edge-disjoined path
 Given a directed graph G = (V, E) and two vertices s and t, we are to find the maximum number of edge-disjoint paths from s to t.
@@ -116,4 +117,3 @@ The strategy is this:
 2. Try to reduce a known NP-Complete problem, if this can't be done it is probebly a NP-Hard problem.
 
 By reduceing I mean if you set a P,NP,NP-Complete problem as a lowerbound and you can use your problem to solve the lowerbound problem then your problem is at least as hard as the problem you use as a mesureing stick. so if you can reduce your problem down to NP-Complete problem you eather have a NP-Complete problem or a NP-Hard problem. 
-
