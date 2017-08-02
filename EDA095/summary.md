@@ -1,4 +1,4 @@
-i EDA095
+# EDA095
 ## Theory
 ### internet protocol suite
 The internet protocol suite is the conceptual model and set of communications protocols used on the internet and similar computer networks. It is commonly known as TCP/IP because the original protocols in the suite are the Transmission Control Protocol (TCP) and the internet Protocol (IP).
@@ -190,14 +190,14 @@ There are several classes that extends the features found in these basic I/O cla
 ![](inputstreams.png)
 ![](outputstreams.png)
 
-	**Note** - These classes needs a I/O class in the constructor.  
+**Note** - These classes needs a I/O class in the constructor.  
 ### Threads
 #### Runnable
-	" The Runnable interface should be implemented by any class whose instances are intended to be executed by a thread. The class must define a method of no arguments called run. " - java documentation. 
+" The Runnable interface should be implemented by any class whose instances are intended to be executed by a thread. The class must define a method of no arguments called run. " - java documentation. 
 
-	When implementing the runnable interface we create another execution context. The class thats implements the runnable interface is a thread i.e. a execution context. In the method run the code each thread should execute is written. 
+When implementing the runnable interface we create another execution context. The class thats implements the runnable interface is a thread i.e. a execution context. In the method run the code each thread should execute is written. 
 
-	In the example below is a java implementation of the runnable interface. Note that in main we start the class implementing Runnable by creating a Thread and placeing the class we've implemented as a input parameter and then calls Thread.start(). This will execute the code in the run method in the class we've implemented.  
+In the example below is a java implementation of the runnable interface. Note that in main we start the class implementing Runnable by creating a Thread and placeing the class we've implemented as a input parameter and then calls Thread.start(). This will execute the code in the run method in the class we've implemented.  
 
 ```java
 public class HelloRunnable implements Runnable {
@@ -324,10 +324,10 @@ public static void main(String[] args) throws Exception {
 	ds.close();  
 }
 
-``` 
+```
 And a class at the receiving end may look like this:
 
-	```
+```java
 	public static void main(String[] args) throws Exception {  
 		DatagramSocket ds = new DatagramSocket(3000);  
 		byte[] buf = new byte[1024];  		
