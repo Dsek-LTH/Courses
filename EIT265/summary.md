@@ -104,7 +104,7 @@ A **notch IIR** filter is when the zeroes lies on the unit circle and the poles 
 * A IIR filter cannot have linear phase. 
 
 #### FIR (Finite Impulse Response)
-A FIR-filter has all their poles at the origin anda are always BIBO-stable: h(n) has a finite duration and the sum of abs(h(n)) is always limited, =/= infinity. 
+A FIR-filter has all their zeroes at the origin anda are always BIBO-stable: h(n) has a finite duration and the sum of abs(h(n)) is always limited, =/= infinity. 
 * Has no feedback. 
 * The transfer function of a FIR filter is called a **Notch FIR** filter.
 * A FIR filter with linear phase has a symmetric impulse response. 
