@@ -131,6 +131,11 @@ Is the problem of determining if there exists an interpretation that satisfies a
 #### Set Cover
 Given a set of elements { 1 , 2 , . . . , n }(called the universe) and a collection S of m sets whose union equals the universe, the set cover problem is to identify the smallest sub-collection of S whose union equals the universe. 
 
+Analogy:
+
+"Imagine being in a lego store and you want to build the Death Star. And me being an truly evil person has, besides leaving lego on the floor, displaced all pieces of the Death Star in all of the other boxes containing Death Star pieces, and vice versa. Being a truly lazy person you want to figure out the minimum amount of boxes to carry home that has the necessary pieces for building the Death Star. Which boxes do you pick?" 
+
+In the analogy the Death Star is the universe and the known boxes is the sets.  
 #### 3-dim. matching
 Is a generalization of bipartite matching (also known as 2-dimensional matching) to 3-uniform hypergraphs.
 
