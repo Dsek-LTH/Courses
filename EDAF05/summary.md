@@ -29,20 +29,91 @@ def Djigstra(G,n,target):
 	return n.value
 ```
 #### Prim's
-
-#### kruskal's
+O(e log v) where e is the edges and v is the vertices. 
+```python
+def prim(G,start): # start can be randomly selected
+	pq = PriorityQueue()
+    	for v in G:
+       		v.setDistance(sys.maxsize)
+        	v.setPred(None)
+   	start.setDistance(0)
+    	pq.buildHeap([(v.getDistance(),v) for v in G])
+    	while not pq.isEmpty():
+       		currentVert = pq.delMin()
+        	for nextVert in currentVert.getConnections():
+          		newCost = currentVert.getWeight(nextVert)
+          		if nextVert in pq and newCost<nextVert.getDistance():
+              			nextVert.setPred(currentVert)
+              			nextVert.setDistance(newCost)
+              			pq.decreaseKey(nextVert,newCost)
+```
+#### Kruskal's
+O(e log v) where e is the edges and v is the vertices. 
+Given a Graph G = (V,E). We want to find the minimum spannig tree. 
+```python
+def kruskal(V,E):
+sort(E)	//Sorts E, low to high
+forest = {}
+while E.length != 0:
+	edge = E.pop()
+	if edge has no endpoint in the forest:
+		forest.append(edge)
+return forest
+```
+Simple and briliant! 
 
 ### Graph connectivity
  A graph is connected when there is a path between every pair of vertices. In a connected graph, there are no unreachable vertices. A graph that is not connected is disconnected. A graph G is said to be disconnected if there exist two nodes in G such that no path in G has those nodes as endpoints.
 A graph with just one vertex is connected. An edgeless graph with two or more vertices is disconnected.
 It is closely related to the theory of network flow problems.
 
-
-#### DFS
-
-#### BFS
-
 **Bitpartite graphs** - A bipartite graph is a graph whos vertices can be devided in two disjoined sets such as every edge connects two vertices, one in each disjoined set.
+#### Depths-first serch (DFS)
+DFS is a serch algorithm designed to find a specified value or node in a Graph.
+One starts at the root and explores as far as possible along each branch before backtracking. This algorithm is sutable for finding items belived to be in the lower leaves. 
+Complexity O(V + E).
+
+A Recursiv implementation: 
+```python
+def DFS(G,v):
+	label v as discovered
+	for all edges from v to w in G.adjacentEdges(v) do
+		if vertex w is not labeled as discovered then
+			recursively call DFS(G,w)
+```
+A non-recursive implementation: 
+```python
+def DFS(G,v):
+  	let S be a stack
+      	S.push(v)
+      	while S is not empty
+        	v = S.pop()
+		if v == target :
+			return target
+
+          	if v is not labeled as discovered:
+              		label v as discovered
+              		for all edges from v to w in G.adjacentEdges(v) do 
+                  		S.push(w)
+	return -1
+```
+#### Breadth-first search (BFS)
+BFS is an alternative to the DFS algorithm. It differes by exploreing the neighbor nodes first, before moving to the next level neighbors instead of serching from the bottom up as the DFS does.
+
+Complexity O(V+E)
+```python
+def BFS(G,v,target):
+	create empty set Visited
+	Q = new Stack()
+    	Q.append(v)                      
+    	while Q is not empty:
+        	current = Q.pop()
+        	if current.value == target:
+            		return current
+        	for each node n that is adjacent to current:
+            		if n is not in Visited:
+                	Q.enqueue(n)
+```
 
 ### Devide and Conqure
 Is an algorithm design paradigm based on multi-branched recursion. A divide and conquer algorithm works by recursively breaking down a problem into two or more sub-problems of the same or related type, until these become simple enough to be solved directly. The solutions to the sub-problems are then combined to give a solution to the original problem.
@@ -95,10 +166,29 @@ Network flow problems are very similar to graph problems but has one main differ
 The max-flow min-cut theorem states that in a flow network, the maximum amount of flow passing from the source to the sink is equal to the total weight of the edges in the minimum cut, i.e. the smallest total weight of the edges which if removed would disconnect the source from the sink.
 
 #### Fulkerson-Ford
+Fulkerson-Ford is a greedy-algorithm to the maximum-flow minimum-cut problem. It works by pushing flow upp all edges until it can't. When the algorithm can't push any more flow in the graph we have our maximum flow in the network.  
 
+Complexity O(E max|f|). ((Can be done in O(VE) by Orlins algorithm, not covered in the course.))
+
+```python
+def Ford-Fulkerson(G,source,sink):
+	flow = 0
+	for each edge(u, v) in G:
+    		flow(u, v) = 0
+	while there is a path, p, from s -> t in residual network G_f:
+    		residual_capacity(p) = min(residual_capacity(u, v) : for (u, v) in p)
+    		flow = flow + residual_capacity(p)
+    		for each edge (u, v) in p:
+        		if (u, v) is a forward edge:
+            			flow(u, v) = flow(u, v) + residual_capacity(p)
+        		else:
+            			flow(u, v) = flow(u, v) - residual_capacity(p)
+	return flow
+```
 ### Special cases
 #### Maximum Edge-disjoined path
 Given a directed graph G = (V, E) and two vertices s and t, we are to find the maximum number of edge-disjoint paths from s to t.
+We do this by giving all the edges in the graph (exept the one(s) leading from the source or to the sink) the maximum capacity of one unit. 
 
 #### Node indipendent path
 Given a directed graph G = (V, E) and two vertices s and t, we are to find the maximum number of independent paths from s to t. Two paths are said to be independent if they do not have a vertex in common apart from s and t.
@@ -142,16 +232,21 @@ Is a generalization of bipartite matching (also known as 2-dimensional matching)
 #### Vertex cover
 Given a Graph G = (V,E), all edges e in E has atleast one end in the resulting set. 
 
+The vertex cover has a NP-hard problem aswell, The Minimum vertex cover, This is the optimization problem of the vertex cover and it aims to find the smallest subset of vertices which can reach all vertices in the graph.   
 #### Graph colouring
 Is a problem which consists of an assignment of labels traditionally called "colors" to elements of a graph subject to certain constraints. In its simplest form, it is a way of coloring the vertices of a graph such that no two connected vertices share the same color. It is important to note that the minimum amount of colors to make this a np-complete problem is 3.
+
+On the other hand the Graph Coloring Optimisation problem, which aims to find the coloring with minimum colors is np-hard, because even if you are given a coloring, you will not be able to say that it's minimum or not.
 
 #### Hammiltonian path & Hammiltonian cycle
 Given a graph G you have to check if there is a way of traversing the graph and visiting each node once. If such path is possible the graph contains a Hammiltonian path.
 A Hammiltonian cycle is a Hammiltonian path which starts and ends in the same node. 
 
+In the same way as the graph coloring problem the Hammiltonian cycle has a optimization problem: The Travelling salesman problem described below. 
 #### knapsack problem
 Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible.
 
+The Knapsack problem as well as previous problems has a optimization problem which is NP-hard, if we wan't to find the optimal solution to the knapsack problem, i.e the perfect ratio between weight and value. 
 ### NP-hard
 NP-hard is the defining property of a class of problems that are, informally, "at least as hard as the hardest problems in NP".  Note that NP-hard problems do not have to be in NP, and they do not have to be decision problems. 
 A memory rule I have: "Is this problem similar to a NP-Complete problem but adds a constran?", if the answer is yes we have a NP-Hard problem. 
