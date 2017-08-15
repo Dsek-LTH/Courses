@@ -12,7 +12,7 @@ In other words, a matching is stable when there does not exist any match (A, B) 
 
 #### Djigstra
 Given a graph G = (V,E) we want to find the shortest path (or cheapest) from a given start node to an end node. 
-The Djigstra algorithm is designed to find the optimal solution but with the constrant that all costs or distances has to be a positive integer. 
+The Djigstra algorithm is designed to find the optimal solution but with the constant that all costs or distances has to be a positive integer. 
 
 The Algorithm: 
 ```python
@@ -60,20 +60,20 @@ while E.length != 0:
 		forest.append(edge)
 return forest
 ```
-Simple and briliant! 
+Simple and brilliant! 
 
 ### Graph connectivity
  A graph is connected when there is a path between every pair of vertices. In a connected graph, there are no unreachable vertices. A graph that is not connected is disconnected. A graph G is said to be disconnected if there exist two nodes in G such that no path in G has those nodes as endpoints.
 A graph with just one vertex is connected. An edgeless graph with two or more vertices is disconnected.
 It is closely related to the theory of network flow problems.
 
-**Bitpartite graphs** - A bipartite graph is a graph whos vertices can be devided in two disjoined sets such as every edge connects two vertices, one in each disjoined set.
-#### Depths-first serch (DFS)
-DFS is a serch algorithm designed to find a specified value or node in a Graph.
-One starts at the root and explores as far as possible along each branch before backtracking. This algorithm is sutable for finding items belived to be in the lower leaves. 
+**Bitpartite graphs** - A bipartite graph is a graph whose vertices can be divided in two disjoined sets such as every edge connects two vertices, one in each disjoined set.
+#### Depths-first search (DFS)
+DFS is a search algorithm designed to find a specified value or node in a Graph.
+One starts at the root and explores as far as possible along each branch before backtracking. This algorithm is suitable for finding items belived to be in the lower leaves. 
 Complexity O(V + E).
 
-A Recursiv implementation: 
+A Recursive implementation: 
 ```python
 def DFS(G,v):
 	label v as discovered
@@ -98,7 +98,7 @@ def DFS(G,v):
 	return -1
 ```
 #### Breadth-first search (BFS)
-BFS is an alternative to the DFS algorithm. It differes by exploreing the neighbor nodes first, before moving to the next level neighbors instead of serching from the bottom up as the DFS does.
+BFS is an alternative to the DFS algorithm. It differs by exploring the neighbor nodes first, before moving to the next level neighbors instead of searching from the bottom up as the DFS does.
 
 Complexity O(V+E)
 ```python
@@ -115,7 +115,7 @@ def BFS(G,v,target):
                 	Q.enqueue(n)
 ```
 
-### Devide and Conqure
+### Divide and Conqure
 Is an algorithm design paradigm based on multi-branched recursion. A divide and conquer algorithm works by recursively breaking down a problem into two or more sub-problems of the same or related type, until these become simple enough to be solved directly. The solutions to the sub-problems are then combined to give a solution to the original problem.
 An example of this is the fibbonacis series, to find the n:th number in the series you have to know all the previous numbers in the series.
 ```java
@@ -168,7 +168,7 @@ The max-flow min-cut theorem states that in a flow network, the maximum amount o
 #### Fulkerson-Ford
 Fulkerson-Ford is a greedy-algorithm to the maximum-flow minimum-cut problem. It works by pushing flow upp all edges until it can't. When the algorithm can't push any more flow in the graph we have our maximum flow in the network.  
 
-Complexity O(E max|f|). ((Can be done in O(VE) by Orlins algorithm, not covered in the course.))
+Complexity O(E max|f|) or O(E+V). ((Can be done in O(VE) by Orlins algorithm, not covered in the course.))
 
 ```python
 def Ford-Fulkerson(G,source,sink):
@@ -188,7 +188,7 @@ def Ford-Fulkerson(G,source,sink):
 ### Special cases
 #### Maximum Edge-disjoined path
 Given a directed graph G = (V, E) and two vertices s and t, we are to find the maximum number of edge-disjoint paths from s to t.
-We do this by giving all the edges in the graph (exept the one(s) leading from the source or to the sink) the maximum capacity of one unit. 
+We do this by giving all the edges in the graph (expect the one(s) leading from the source or to the sink) the maximum capacity of one unit. 
 
 #### Node indipendent path
 Given a directed graph G = (V, E) and two vertices s and t, we are to find the maximum number of independent paths from s to t. Two paths are said to be independent if they do not have a vertex in common apart from s and t.
@@ -284,3 +284,9 @@ The strategy is this:
 2. Try to reduce a known NP-Complete problem, if this can't be done it is probebly a NP-Hard problem.
 
 By reduceing I mean if you set a P,NP,NP-Complete problem as a lowerbound and you can use your problem to solve the lowerbound problem then your problem is at least as hard as the problem you use as a mesureing stick. so if you can reduce your problem down to NP-Complete problem you eather have a NP-Complete problem or a NP-Hard problem. 
+
+
+
+
+
+Author: Måns Ansgariusson, C14
