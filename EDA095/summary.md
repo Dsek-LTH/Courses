@@ -1,4 +1,4 @@
-i EDA095
+# EDA095
 ## Theory
 ### internet protocol suite
 The internet protocol suite is the conceptual model and set of communications protocols used on the internet and similar computer networks. It is commonly known as TCP/IP because the original protocols in the suite are the Transmission Control Protocol (TCP) and the internet Protocol (IP).
@@ -47,6 +47,9 @@ HTTP is an application layer protocol designed within the framework of the inter
 
 
 A Uniform Resource Locator (URL), colloquially termed a web address, is a reference to a web resource that specifies its location on a computer network and a mechanism for retrieving it. A URL is a specific type of Uniform Resource Identifier (URI), although many people use the two terms interchangeably. URLs occur most commonly to reference web pages (http), but are also used for file transfer (ftp), email (mailto), database access (JDBC), and many other applications.
+
+**MIME(Multipurpose Mail Internet Extensions)** - A tag to identify the content type as json, txt, jpg etc. MIME defines both type and subtype, ex. text/html or image/gif. 
+
 
 ### HTML, CSS, DOM, json, XML
 Hypertext Markup Language (HTML) is the standard markup language for creating web pages and web applications. With Cascading Style Sheets (CSS) and JavaScript it forms a triad of cornerstone technologies for the World Wide Web. Web browsers receive HTML documents from a web-server or from local storage and render them into multimedia web pages. HTML describes the structure of a web page semantically and originally included cues for the appearance of the document.
