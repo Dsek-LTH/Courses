@@ -89,7 +89,20 @@ The encoding is variable-length and uses 8-bit code units. It was designed for b
 ### JSP && Servlets
 JSP is a webpage scripting language that can generate dynamic content while Servlets is a Java program which already compiled which also creates dynamic web content. Servlets run faster compared to JSP. JSP can be compiled into Java Servlets. It's easier to code in JSP than in Java Servlets.
 
- **Main Difference** : The servlets are compiled at the first GET request of the content and then keept for future requests while JSP is generated every time. 
+**Main Difference** : The servlets are compiled at the first GET request of the content and then keept for future requests while JSP is generated every time. 
+
+### Java.nio
+The Java.nio library is the next gen of IO in java, one of the main features it introduces is non-blocking I/O which is useful if you want to write scalable and efficient server software in Java.
+
+NIO allows you to manage multiple channels (network connections or files) using only a single (or few) threads, but the cost is that parsing the data might be somewhat more complicated than when reading data from a blocking stream.
+
+If you need to manage thousands of open connections simultanously, which each only send a little data, for instance a chat server, implementing the server in NIO is probably an advantage. Similarly, if you need to keep a lot of open connections to other computers, e.g. in a P2P network, using a single thread to manage all of your outbound connections might be an advantage. 
+
+If you have fewer connections with very high bandwidth, sending a lot of data at a time, perhaps a classic IO server implementation might be the best fit.
+
+#### Selector
+Java NIO's selectors allow a single thread to monitor multiple channels of input. You can register multiple channels with a selector, then use a single thread to "select" the channels that have input available for processing, or select the channels that are ready for writing. This selector mechanism makes it easy for a single thread to manage multiple channels. 
+
 ### Thread(s)
 A thread is an execution context, which is all the information a CPU needs to execute a stream of instructions. A CPU is giving you the illusion that it's doing multiple computations at the same time. It does that by spending a bit of time on each computation. It can do that because it has an execution context for each computation.
 
@@ -100,30 +113,31 @@ A thread is an execution context, which is all the information a CPU needs to ex
 **Multicast** is group communication where information is addressed to a group of destination computers simultaneously. 
 #### Syncronization
 Synchronization refers to one of two distinct but related concepts: synchronization of processes, and synchronization of data. Process synchronization refers to the idea that multiple processes are to join up or handshake at a certain point, in order to reach an agreement or commit to a certain sequence of action. Data synchronization refers to the idea of keeping multiple copies of a dataset in coherence with one another, or to maintain data integrity. 
-track to synchronization we wont get unidentified behavior when programing with several threads. 
+If we use synchronization we wont get unidentified behavior when programing with several threads. 
 
 
-To acomplish this we use the keyword: Synchronized in java. 
+To acomplish this we use the keyword: Synchronized in java. Putting synchronized on a method means the thread has to acquire the lock on the object instance before entering that method, so if you have two different methods marked synchronized the threads entering them will be contending for the same lock, and once one thread gets the lock all other threads are shut out of all methods that synchronize on that same lock.
 ```java
 public synchronized void DoStuff(){
-	...
+  ...
 }
 ```
 A more sutable example is when dealing with data storage.
 ```java
 public class storage{
-	private int data[] = new int[10];
+  private int data[] = new int[10];
 
-	public synchronized void setNumber(int n){
-		...
-	}
+  public synchronized void setNumber(int n){
+    ...
+  }
 
-	public synchronized int getNumber(int index){
-		...
-	}
+  public synchronized int getNumber(int index){
+    ...
+  }
 }
 ```
 The class above is secure to unidentified behavior due to thread interactions. Examples of unidentified behavior due to thread interaction and synchronization is listed below.
+* **Race conditions** - Race conditions arise in software when an application depends on the sequence or timing of processes or threads for it to operate properly. Critical race conditions often happen when the processes or threads depend on some shared state. Operations upon shared states are critical sections that must be mutually exclusive. Failure to obey this rule opens up the possibility of corrupting the shared state.
 
 * **Mutual exclusion** is a property of concurrency control, which is instituted for the purpose of preventing race conditions; it is the requirement that one thread of execution never enter its critical section at the same time that another concurrent thread of execution enters its own critical section. 
 
@@ -133,38 +147,38 @@ The class above is secure to unidentified behavior due to thread interactions. E
 
 To solve some of the problems or all is to 1. **Don't create a circular dependency in any synchronized class**, this solves the problem of deadlocks. 2. Use the functions `wait()` `notify()` and `notifyAll()`. These are very useful ways of managing cpu power and overall performance of threads. 
 
-The `wait()` sets a thread to a "Non-runnable state" this tells the JVM to not schedule any more work for the thread in question.
+The `wait()` sets a thread to a "Non-runnable state" this tells the JVM to not schedule any more work for the thread in question and the notify,notifyAll sets one or all threads to a "Runnable state".  
 
 ```java
 public class storage{
-	private ArrayList<job> jobList = new ArrayList();
+  private ArrayList<job> jobList = new ArrayList();
 
-	public synchronized void addJob(job j){
-		jobList.add(j);		
-		notify(); // sets an arbitrary thread which been put in a non-runnable state to runnable state.
-	}
+  public synchronized void addJob(job j){
+    jobList.add(j);		
+    notify(); // sets an arbitrary thread which been put in a non-runnable state to runnable state.
+  }
 
-	public synchronized job getJob(){
-		if(jobList.size() == 0)
-			wait(); // sets the thread to the non-runnable state.
-		else
-			return jobList.pop();
-	}
+  public synchronized job getJob(){
+    if(jobList.size() == 0)
+      wait(); // sets the thread to the non-runnable state.
+    else
+      return jobList.pop();
+  }
 }
 ```
 Why didn't the mad man write notifyAll()? - because it would be point less to notify all threads waiting for a job if only one of them are able to get a job, waste of cpu power. 
 - But if there is more jobs in the list? 
-- then they will wait as every other swede in the world until they get access to the function and then get a job or be put in a non runnable state. 
+- then they will wait until they get access to the function and then get a job or be put in a non runnable state. 
 - When sould you use notifyAll() then if you're so clever? 
 - here:
 
 ```java
 public class storage{
-	....
-	public synchronized void addListOfJobs(list l){
-		jobList.addAll(l);
-		notifyAll();
-	}
+  ....
+    public synchronized void addListOfJobs(list l){
+      jobList.addAll(l);
+      notifyAll();
+    }
 }
 ```
 Because now one **or more** jobs will be added to the current list of jobs. If we were to use the previously stated solution we would have several inactive threads consuming memory and have a single thread program again if no new threads are created. - Non efficient. 
@@ -188,8 +202,8 @@ socket s = ....;
 InputStream in =s.getInputStream(); 
 Byte[] arr = new Byte[1024];
 while(in.read(arr)!=-1){ /* reads the next set of bytes from the file and stores 
-			   * it in the variable a, aslong as the value is != -1 */
-	..... 		  //do something with the input from read
+                          * it in the variable a, aslong as the value is != -1 */
+  ..... 		  //do something with the input from read
 }
 in.close();
 ```
@@ -198,7 +212,7 @@ in.close();
 OutputStream out = new FileOutputStream("Path to file");
 int data[] = {.....};
 for(int i : data){
-	out.write(i);
+  out.write(i);
 }
 out.flush();
 output.close();
@@ -209,34 +223,32 @@ The second example will write all ints stored in the data array to a file define
 
 There are several classes that extends the features found in these basic I/O classes. They can be seen below and their relationship to the OutputStream and InputStream. 
 
-![](inputstreams.png)
+  ![](inputstreams.png)
 ![](outputstreams.png)
 
-**Note** - These classes needs a I/O class in the constructor.  
+  **Note** - These classes needs a I/O class in the constructor.  
 ### Threads
 #### Runnable
-" The Runnable interface should be implemented by any class whose instances are intended to be executed by a thread. The class must define a method of no arguments called run. " - java documentation. 
+  " The Runnable interface should be implemented by any class whose instances are intended to be executed by a thread. The class must define a method of no arguments called run. " - java documentation. 
 
-When implementing the runnable interface we create another execution context. The class thats implements the runnable interface is a thread i.e. a execution context. In the method run the code each thread should execute is written. 
+  When implementing the runnable interface we create another execution context. The class thats implements the runnable interface is a thread i.e. a execution context. In the method run the code each thread should execute is written. 
 
-In the example below is a java implementation of the runnable interface. Note that in main we start the class implementing Runnable by creating a Thread and placeing the class we've implemented as a input parameter and then calls Thread.start(). This will execute the code in the run method in the class we've implemented.  
+  In the example below is a java implementation of the runnable interface. Note that in main we start the class implementing Runnable by creating a Thread and placeing the class we've implemented as a input parameter and then calls Thread.start(). This will execute the code in the run method in the class we've implemented.  
 
-```java
-public class HelloRunnable implements Runnable {
+  ```java
+  public class HelloRunnable implements Runnable {
 
-	public void run() {
-		System.out.println("Hello from a thread!");
-	}
+    public void run() {
+      System.out.println("Hello from a thread!");
+    }
 
-}
+  }
 
 public static void main(String args[]) {
-	(new Thread(new HelloRunnable())).start();
+  (new Thread(new HelloRunnable())).start();
 }
 
 ```
-
-
 #### Thread
 Thread is a class thats extends the runnable interface. 
 
@@ -246,14 +258,14 @@ So when extending the Thread class we ovverride the run method to be able to use
 ```java
 public class HelloThread extends Thread {
 
-	public void run() {
-		System.out.println("Hello from a thread!");
-	}
+  public void run() {
+    System.out.println("Hello from a thread!");
+  }
 
 }
 
 public static void main(String args[]) {
-	(new HelloThread()).start();
+  (new HelloThread()).start();
 }
 
 ```
@@ -276,15 +288,17 @@ List<Task> tasks; // filled with work to be done
 ExecutorService pool = Executors.newFixedThreadPool(16); // Creates a threadpool with 16 active threads to compute results. 
 List<Future<boolean>> futures = new ArrayList(); // a storage for the results generated by the threadpool
 for(Task t: tasks){
-	Future<boolean> f= pool.submit(t); //A task is submitted to the threadpool and is executed when possible by the threadpool. 
-	futures.add(f);
+  Future<boolean> f= pool.submit(t); //A task is submitted to the threadpool and is executed when possible by the threadpool. 
+  futures.add(f);
 }
 for(Future f : futures){
-	system.out.println(f.get()); //Waits if necessary for the computation to complete, and then retrieves and prints the result
+  system.out.println(f.get()); //Waits if necessary for the computation to complete, and then retrieves and prints the result
 }
 pool.shutdown();
-
 ```
+The Callable interface implements one single method: <Type> call();.
+The call() is called by the executor service and returns a Future object. 
+
 ### Network programing
 #### Socket & ServerSocket (TCP)
 A socket is one end-point of a two-way communication link between two programs running on a network. Socket classes are used to represent the connection between a client program and a server program. The socket requires a host, a address to the socket(ipv4 or ipv6), and a port number which the socket is listed on.
@@ -296,38 +310,38 @@ A accept thread may look something like this:
 public Accept() {...}
 
 public void run() {
-	try {
-		ServerSocket ss = new ServerSocket(7878);
-		while (true) {
-			Socket s = ss.accept();
-			// Start the iformation trading thread
-		}
-	} catch(IOException e) {
-		....
-	}
+  try {
+    ServerSocket ss = new ServerSocket(7878);
+    while (true) {
+      Socket s = ss.accept();
+      // Start the iformation trading thread
+    }
+  } catch(IOException e) {
+    ....
+  }
 }
 ```
 This just start the information flow between two machines, to actually do something well need to create a information channel between the two. Like this: 
 ```java
 public ClientThread(Socket sock) {
-	this.sock = sock;
+  this.sock = sock;
 }
 public void run() {
-	try {
-		byte[] latest = null;
-		InputStream inp = sock.getInputStream();
-		OutputStream outp = sock.getOutputStream();
-		// Do something with the information eather lisen to the input or send output to the client or create two new threads and do both. 
-	} catch(IOException e) {
-		....
-	}
+  try {
+    byte[] latest = null;
+    InputStream inp = sock.getInputStream();
+    OutputStream outp = sock.getOutputStream();
+    // Do something with the information eather lisen to the input or send output to the client or create two new threads and do both. 
+  } catch(IOException e) {
+    ....
+  }
 }
 ```
 **Note** - by having a socket we can get a InputStream and an OutputStream to communicate with the other end node. 
 The main program should look something like this:
 ```java
 Public static void main(String args[]) {
-	new Accept().start();
+  new Accept().start();
 }
 ```
 #### DatagramSocket (UDP)
@@ -337,28 +351,28 @@ The datagram socket doesn't guarantee a package delivery and it doesn't need a A
 A program that sends information may look something like this: 
 ```java
 public static void main(String[] args) throws Exception {  
-	DatagramSocket ds = new DatagramSocket();  
-	String str = "Welcome java";  
-	InetAddress ip = InetAddress.getByName("127.0.0.1");  
+  DatagramSocket ds = new DatagramSocket();  
+  String str = "Welcome java";  
+  InetAddress ip = InetAddress.getByName("127.0.0.1");  
 
-	DatagramPacket dp = new DatagramPacket(str.getBytes(), str.length(), ip, 3000);  
-	ds.send(dp);  
-	ds.close();  
+  DatagramPacket dp = new DatagramPacket(str.getBytes(), str.length(), ip, 3000);  
+  ds.send(dp);  
+  ds.close();  
 }
 
 ```
 And a class at the receiving end may look like this:
 
-```java
-	public static void main(String[] args) throws Exception {  
-		DatagramSocket ds = new DatagramSocket(3000);  
-		byte[] buf = new byte[1024];  		
-		DatagramPacket dp = new DatagramPacket(buf, 1024);  
-		ds.receive(dp); //Stores the information received in the DatagramPacket created above.  
-		String str = new String(dp.getData(), 0, dp.getLength());  
-		System.out.println(str);  
-		ds.close();  
-	}  
+  ```java
+  public static void main(String[] args) throws Exception {  
+    DatagramSocket ds = new DatagramSocket(3000);  
+    byte[] buf = new byte[1024];  		
+    DatagramPacket dp = new DatagramPacket(buf, 1024);  
+    ds.receive(dp); //Stores the information received in the DatagramPacket created above.  
+    String str = new String(dp.getData(), 0, dp.getLength());  
+    System.out.println(str);  
+    ds.close();  
+  }  
 ```  
 
 #### MulticastSocket
@@ -378,7 +392,7 @@ InetAddress group = InetAddress.getByName(IP);
 MulticastSocket s = new MulticastSocket(port);
 s.joinGroup(group);
 DatagramPacket hi = new DatagramPacket(msg.getBytes(), msg.length(),
-		group, port);
+    group, port);
 s.send(hi);
 // get a response 
 byte[] buf = new byte[1000];
