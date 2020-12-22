@@ -6,5 +6,5 @@ Everything pushed will be subjected to examend by a D-Guild representative befor
 No lab answers or alike may be pushed to this repository, if content of this nature were to be found the push were to be rejected and the author may be held accountable. 
 
 # Licence
-Everything pushed in this repository is the intelectual property of the computer sience guild at Lunds Tekniska Högskola.
+Everything pushed in this repository is the intelectual property of the computer science guild at Lunds Tekniska Högskola.
 
